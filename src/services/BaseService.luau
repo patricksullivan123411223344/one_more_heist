@@ -6,7 +6,7 @@ local Config = require(
 
 function BaseService.SendToBase(player)
 
-    local character = player.character
+    local character = player.Character
 
     if not character then
         return
