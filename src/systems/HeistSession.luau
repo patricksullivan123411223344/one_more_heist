@@ -58,8 +58,12 @@ function HeistSession:CashOut()
     end
 
     local payout = self.UnbankedCash
-    self.Status = "Completed"
 
+    if payout then
+        self.UnbankedCash = 0
+    end
+
+    self.Status = "Completed"
     return payout
 end
 

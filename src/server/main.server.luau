@@ -65,7 +65,7 @@ createPlatform(
     Vector3.new(150, 0, 0)
 )
 
--- Headquarters entrance
+-- Heist entrance
 
 createInteractionPart(
     "HeistEntrance",
