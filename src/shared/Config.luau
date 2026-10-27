@@ -8,7 +8,8 @@ Config.Base = {
 }
 
 Config.Heist = {
-    SpawnPosition = Vector3.new(150, 5, 0)
+    SpawnPosition = Vector3.new(150, 5, 0),
+    NewRoom = Vector3.new(300, 5, 0)
 }
 
 return Config

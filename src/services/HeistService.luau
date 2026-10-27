@@ -1,5 +1,9 @@
 local HeistService = {}
 
+local Config = require(
+    game:GetService("ReplicatedStorage").Shared.Config
+)
+
 local HeistSession = require(
     script.Parent.Parent.Systems.HeistSession
 )
@@ -7,7 +11,6 @@ local HeistSession = require(
 local ActiveSessions = {}
 
 function HeistService.StartHeist(player)
-
     local userId = player.UserId
 
     if ActiveSessions[userId] then
@@ -24,7 +27,6 @@ function HeistService.StartHeist(player)
 end
 
 function HeistService.EndHeist(player)
-
     local userId = player.UserId
 
     if not ActiveSessions[userId] then
