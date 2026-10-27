@@ -1,21 +1,31 @@
+type HeistStatusOptions = "InProgress" | "CanCashOut" | "Completed" | "Failed"
+type RoomStatusOptions = "InProgress" | "Completed" | "Failed"
+
+export type HeistSession = {
+    UserId: number,
+    CurrentRoom: number,
+    UnbankedCash: number,
+    HeistStatus: HeistStatusOptions,
+    RoomStatus: RoomStatusOptions
+}
+
 local HeistSession = {}
 HeistSession.__index = HeistSession
 
 function HeistSession.new(userId: number)
-
     local self = setmetatable({}, HeistSession)
-    
+
     self.UserId = userId
     self.CurrentRoom = 1
     self.UnbankedCash = 0
-    self.Status = "InProgress"
+    self.HeistStatus = "InProgress"
+    self.RoomStatus = "InProgress"
 
     return self
 end
 
 function HeistSession:AddReward(amount: number)
-
-    if self.Status ~= "InProgress" then
+    if self.HeistStatus ~= "InProgress" then
         return false
     end
 
@@ -29,31 +39,30 @@ function HeistSession:AddReward(amount: number)
 end
 
 function HeistSession:CompleteRoom()
-    
-    if self.Status ~= "InProgress" then
+    if self.RoomStatus ~= "InProgress" then
         return false
     end
 
-    self.Status = "CanCashOut"
+    self.RoomStatus = "Completed"
+    self.HeistStatus = "CanCashOut"
 
     return true
 end
 
 function HeistSession:ContinueHeist()
-
-    if self.Status ~= "CanCashOut" then
+    if self.HeistStatus ~= "CanCashOut" then
         return false
     end
 
     self.CurrentRoom += 1
-    self.Status = "InProgress"
+    self.HeistStatus = "InProgress"
+    self.RoomStatus = "InProgress"
 
     return true
 end
 
 function HeistSession:CashOut() 
-
-    if self.Status ~= "CanCashOut" then
+    if self.HeistStatus ~= "CanCashOut" then
         return nil
     end
 
@@ -68,8 +77,11 @@ function HeistSession:CashOut()
 end
 
 function HeistSession:HeistFail()
+    if self.HeistStatus == "CanCashOut" or self.HeistStatus == "Completed" or self.HeistStatus == "Failed" then
+        return false
+    end
 
-    if self.Status == "Completed" or self.Status == "Failed" then
+    if self.RoomStatus == "Completed" then
         return false
     end
 

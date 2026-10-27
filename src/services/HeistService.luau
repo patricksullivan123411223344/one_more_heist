@@ -11,7 +11,6 @@ local HeistSession = require(
 local ActiveSessions = {}
 
 function HeistService.StartHeist(player)
-
     local character = player.Character
     local userId = player.UserId
 
@@ -32,7 +31,6 @@ function HeistService.StartHeist(player)
 end
 
 function HeistService.EndHeist(player)
-
     local userId = player.UserId
 
     if not ActiveSessions[userId] then
